@@ -31,13 +31,14 @@ class API(Textveloper):
         request_url = self.api_url.format('enviar')
         response = requests.post(request_url, data=payload)
 
-        return response.content
+        return simplejson.loads(response.content)
 
     def enviar_mensaje_masivo(self, telefonos, mensaje):
         """
         docstring
         """
         responses = {}.fromkeys(telefonos)
+
         for telefono in telefonos:
             responses[telefono] = self.enviar_mensaje(telefono, mensaje)
 
@@ -52,7 +53,7 @@ class API(Textveloper):
         request_url = self.api_url.format('saldo-subcuenta')
         response = requests.post(request_url, data=payload)
 
-        return response.content
+        return eval(response.content) # Debido a un error en el API retorna un json mal formado
 
     def historial_transferencias(self):
         """docstring for historial_transferencias"""
@@ -106,7 +107,7 @@ class AccountManager(Textveloper):
         payload = {'cuenta_token': self.token}
         request_url = self.api_url.format('saldo-cuenta')
         response = requests.post(request_url, data=payload)
-        return response.content
+        return eval(response.content)  # Debido a un error en el API retorna un json mal formado
 
     def historial_compras(self):
         """docstring for historial_transferencias"""
