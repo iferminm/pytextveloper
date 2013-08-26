@@ -87,18 +87,19 @@ class AccountManager(Textveloper):
     """
     __metaclass__ = Singleton
 
-    def __init__(self, cuenta_token, registro_subcuentas=False):
+    sub_accounts = {}
+
+    def __init__(self, cuenta_token, registro_subcuentas=True):
         super(Textveloper, self).__init__()
         self.token = cuenta_token
         self.memoizing = registro_subcuentas
-        self.sub_accounts = {}
 
     def api_subcuenta(self, sub_token):
         if self.memoizing: 
-            if sub_token not in self.sub_accounts.keys():
-                self.sub_accounts[sub_token] = API(cuenta_token=self.token, sub_token=sub_token)
+            if sub_token not in AccountManager.sub_accounts.keys():
+                AccountManager.sub_accounts[sub_token] = API(cuenta_token=self.token, sub_token=sub_token)
 
-            return self.sub_accounts[sub_token]
+            return AccountManager.sub_accounts[sub_token]
 
         return API(cuenta_token=self.token, sub_token=sub_token)
 
