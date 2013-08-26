@@ -30,7 +30,8 @@ class API(Textveloper):
         }
         request_url = self.api_url.format('enviar')
         response = requests.post(request_url, data=payload)
-        return response
+
+        return response.content
 
     def enviar_mensaje_masivo(self, telefonos, mensaje):
         """
@@ -50,11 +51,15 @@ class API(Textveloper):
         }
         request_url = self.api_url.format('saldo-subcuenta')
         response = requests.post(request_url, data=payload)
-        return eval(response.content)
+
+        return response.content
 
     def historial_transferencias(self):
         """docstring for historial_transferencias"""
-        payload = {'cuenta_token': self.token}
+        payload = {
+            'cuenta_token': self.account_token, 
+            'subcuenta_token': self.token
+        }
         request_url = self.api_url.format('historial-transferencias')
         response = requests.post(request_url, data=payload)
 
@@ -64,7 +69,10 @@ class API(Textveloper):
         """
         docstring
         """
-        payload = {'cuenta_token': self.account_token}
+        payload = {
+            'cuenta_token': self.account_token,
+            'subcuenta_token': self.token
+        }
         request_url = self.api_url.format('historial-envios')
         response = requests.post(request_url, data=payload)
 
@@ -98,11 +106,12 @@ class AccountManager(Textveloper):
         payload = {'cuenta_token': self.token}
         request_url = self.api_url.format('saldo-cuenta')
         response = requests.post(request_url, data=payload)
-        return eval(response.content)
+        return response.content
 
     def historial_compras(self):
         """docstring for historial_transferencias"""
         payload = {'cuenta_token': self.token}
         request_url = self.api_url.format('historial-compras')
         response = requests.post(request_url, data=payload)
+
         return simplejson.loads(response.content)
