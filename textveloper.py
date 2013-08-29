@@ -1,7 +1,7 @@
 #coding=utf-8
 # Programado por:
 #    Israel Fermín Montilla <iferminm@gmail.com>
-from .metaclasses import Singleton
+from metaclasses import Singleton
 import simplejson
 import requests
 
