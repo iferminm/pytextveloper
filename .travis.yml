@@ -5,6 +5,6 @@ python:
     - "3.2"
     - "3.3"
 # command to install dependencies
-install: "pip install -r pytextveloper/requirements.txt"
+install: "pip install -r requirements.txt --use-mirrors"
 # # command to run tests
-script: "python pytextveloper/tests.py"
+script: "python tests.py"
