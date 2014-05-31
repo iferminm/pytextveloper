@@ -4,7 +4,7 @@
 from metaclasses import Singleton
 import simplejson
 import requests
-
+import time
 
 class Textveloper(object):
     api_url = 'http://api.textveloper.com/{0}/'
@@ -40,7 +40,9 @@ class API(Textveloper):
         responses = {}.fromkeys(telefonos)
 
         for telefono in telefonos:
+            time.sleep(1)
             responses[telefono] = self.enviar_mensaje(telefono, mensaje)
+            
 
         return responses
 
